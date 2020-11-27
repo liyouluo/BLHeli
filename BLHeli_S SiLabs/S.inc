@@ -250,7 +250,7 @@ Set_Pwm_Polarity MACRO
 IF FETON_DELAY == 0
 	mov	PCA0POL, #00h				; Pwm noninverted
 ELSE
-	mov	PCA0POL, #01h				; Damping inverted, pwm noninverted
+	mov	PCA0POL, #03h				; Damping inverted, pwm inverted
 ENDIF
 ENDM
 Enable_Power_Pwm_Module MACRO
@@ -335,49 +335,49 @@ P1_PUSHPULL	EQU	(1 SHL ApwmFET)+(1 SHL BpwmFET)+(1 SHL CpwmFET)+(1 SHL AcomFET)+
 P1_SKIP		EQU	3Fh
 
 ApwmFET_on MACRO
-	setb	P1.ApwmFET
+	clr	P1.ApwmFET;setb	P1.ApwmFET
 IF FETON_DELAY == 0
 	setb	P1.AcomFET
 ENDIF
 ENDM
 ApwmFET_off MACRO
 IF FETON_DELAY != 0
-	clr	P1.ApwmFET
+	setb	P1.ApwmFET;clr	P1.ApwmFET
 ELSE
 	clr	P1.AcomFET
 ENDIF
 ENDM
 BpwmFET_on MACRO
-	setb	P1.BpwmFET
+	clr	P1.BpwmFET;setb	P1.BpwmFET
 IF FETON_DELAY == 0
 	setb	P1.BcomFET
 ENDIF
 ENDM
 BpwmFET_off MACRO
 IF FETON_DELAY != 0
-	clr	P1.BpwmFET
+	setb	P1.BpwmFET;clr	P1.BpwmFET
 ELSE
 	clr	P1.BcomFET
 ENDIF
 ENDM
 CpwmFET_on MACRO
-	setb	P1.CpwmFET
+	clr	P1.CpwmFET;setb	P1.CpwmFET
 IF FETON_DELAY == 0
 	setb	P1.CcomFET
 ENDIF
 ENDM
 CpwmFET_off MACRO
 IF FETON_DELAY != 0
-	clr	P1.CpwmFET
+	setb	P1.CpwmFET;clr	P1.CpwmFET
 ELSE
 	clr	P1.CcomFET
 ENDIF
 ENDM
 All_pwmFETs_Off MACRO
 IF FETON_DELAY != 0
-	clr	P1.ApwmFET
-	clr	P1.BpwmFET
-	clr	P1.CpwmFET
+	setb	P1.ApwmFET;clr	P1.ApwmFET
+	setb	P1.BpwmFET;clr	P1.BpwmFET
+	setb	P1.CpwmFET;clr	P1.CpwmFET
 ELSE
 	clr	P1.AcomFET
 	clr	P1.BcomFET
@@ -387,7 +387,7 @@ ENDM
 
 AcomFET_on MACRO
 IF FETON_DELAY == 0
-	clr	P1.ApwmFET
+	setb	P1.ApwmFET;clr	P1.ApwmFET
 ENDIF
 	setb	P1.AcomFET
 ENDM
@@ -396,7 +396,7 @@ AcomFET_off MACRO
 ENDM
 BcomFET_on MACRO
 IF FETON_DELAY == 0
-	clr	P1.BpwmFET
+	setb	P1.BpwmFET;clr	P1.BpwmFET
 ENDIF
 	setb	P1.BcomFET
 ENDM
@@ -405,7 +405,7 @@ BcomFET_off MACRO
 ENDM
 CcomFET_on MACRO
 IF FETON_DELAY == 0
-	clr	P1.CpwmFET
+	setb	P1.CpwmFET;clr	P1.CpwmFET
 ENDIF
 	setb	P1.CcomFET
 ENDM
